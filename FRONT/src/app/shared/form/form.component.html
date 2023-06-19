@@ -1,0 +1,17 @@
+<div class="example-container">
+    <mat-form-field>
+      <mat-label>Número de dias</mat-label>
+      <mat-select (selectionChange)="selectionDate($event.value)">
+        <mat-option *ngFor="let date of dates" [value]="date" > {{date}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Compania</mat-label>
+        <mat-select (selectionChange)="selectionCompany($event.value)">
+          <mat-option value="PETR4.SA"> Petrobras  </mat-option>
+          <mat-option value="AAPL">Apple</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+

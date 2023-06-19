@@ -1,0 +1,15 @@
+<mat-tab-group>
+  <mat-tab label="Variação de preço dia a dia"> 
+   
+      <div nz-col nzSpan="12">
+        <div #chart echarts [options]="options" theme="macarons" class="demo-chart"></div>
+      </div>
+    
+  </mat-tab>
+  <mat-tab label="Variação de preço desde o primeiro pregão"> 
+      <div nz-col nzSpan="12">
+        <div #chart2 echarts [options]="options2" theme="macarons" class="demo-chart"></div>
+      </div>
+  </mat-tab>
+
+</mat-tab-group>
