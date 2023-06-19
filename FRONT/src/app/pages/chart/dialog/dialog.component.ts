@@ -18,7 +18,7 @@ export class DialogComponent {
   constructor(public dialogRef: MatDialogRef<DialogComponent>,private router:Router,private activatedRoute:ActivatedRoute,private financeService:FinanceService) {}
 
   onClickOk(){
-    console.log('onclick Ok')
+
     this.router.navigate(['chart'], {
       relativeTo:this.activatedRoute,
       queryParams:{

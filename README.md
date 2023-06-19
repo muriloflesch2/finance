@@ -19,3 +19,9 @@ BACKEND
 2) Com o objetivo de utilizar ao máximo de recursos do Angular, criei duas paginas (Home e Chart) que personalizam os graficos ancorando os dados no QUERYPARAMS da página.
 
 3) Foi implementada a criação de um componente chamado FORM para demonstrar a criação personalizada de compoentes e a arquitetura de pastas utilizada para estas situações.
+
+## Funcionalidades que seriam implementadas em seguida:
+
+1) Validação nos formulários e tratamento de erros.
+
+
