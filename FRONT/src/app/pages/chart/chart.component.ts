@@ -3,6 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { EChartsOption, EChartsType, connect, getInstanceByDom } from 'echarts';
 import { FinanceService } from 'src/app/services/finance.service';
 import * as cloneDeep from 'lodash/cloneDeep';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chart',
@@ -20,6 +21,8 @@ export class ChartComponent {
   chartGraph:EChartsType;
   chartGraph2:EChartsType;
   
+  routeSubscription:Subscription;
+  dataSubscription:Subscription;
   title = 'project-yahoo-finance';
 
   optionsBase: EChartsOption ={
@@ -68,13 +71,14 @@ export class ChartComponent {
   constructor(private financeService:FinanceService, private activatedRoute:ActivatedRoute,private router: Router) {}
 
   ngOnInit(){
-      this.activatedRoute.queryParams.subscribe((params:Params)=>{
-          const companyName = this.activatedRoute.snapshot.queryParams['company'] || 'PETR4.SA';
-          const days = this.activatedRoute.snapshot.queryParams['range'] || '30';
+     this.routeSubscription = this.activatedRoute.queryParams.subscribe((params:Params)=>{
+        const companyName = this.activatedRoute.snapshot.queryParams['company'] || 'PETR4.SA';
+        const days = this.activatedRoute.snapshot.queryParams['range'] || '30';
 
-          this.financeService.getData(companyName,days).subscribe((resp)=>{
+        this.dataSubscription = this.financeService.getData(companyName,days)
+          .subscribe((resp)=>{
             const data = resp.chart.result.find(e => e)
-            this.setDataChart(Number(days),data.indicators.quote[0].high);
+            this.setDataChart(Number(days),data.indicators.quote[0].close);
             this.configCharts()
           });
       })
@@ -106,16 +110,9 @@ export class ChartComponent {
     })
   }
 
-  setDataChart2(xAxis,series:[]){
-    this.optionsBase.xAxis[0].data = Array.from(Array(xAxis),(e,i)=>(i+1))
-    
-    series.reduce((prev,current,index)=> {
-        const variation = ((current * 100) / prev) - 100
-        this.optionsBase.series[0].data[index] = variation
-
-        return current;
-    });
-    this.options2 = this.optionsBase;
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
+    this.routeSubscription.unsubscribe();
   }
 }
 
